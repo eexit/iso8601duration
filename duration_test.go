@@ -6,6 +6,7 @@ import (
 
 	duration "github.com/channelmeter/iso8601duration"
 	"github.com/stretchr/testify/assert"
+	"fmt"
 )
 
 func TestFromString(t *testing.T) {
@@ -78,4 +79,30 @@ func TestToDuration(t *testing.T) {
 
 	d = duration.Duration{Seconds: 1}
 	assert.Equal(t, d.ToDuration(), time.Second)
+}
+
+func TestDurationToIso(t *testing.T) {
+	t.Parallel()
+
+	s := time.Second * 37
+	m := time.Minute * 8
+	h := time.Hour * 10
+	d := time.Hour * 24 * 3
+	w := time.Hour * 24 * 7 * 6 * 0
+	y := time.Hour * 24 * 365 * 2 * 0
+
+	dur := s + m + h + d + w + y
+
+	fmt.Printf("%f\n\n", dur)
+
+	e := &duration.Duration{
+		Years: 2 * 0,
+		Weeks: 6 * 0,
+		Days: 3,
+		Hours: 10,
+		Minutes: 8,
+		Seconds: 37,
+	}
+
+	assert.Equal(t, e, duration.ToIso(dur))
 }

@@ -119,3 +119,20 @@ func (d *Duration) ToDuration() time.Duration {
 
 	return tot
 }
+
+func ToIso(input time.Duration) *Duration {
+	m, seconds := int(input.Seconds()) / 60, int(input.Seconds()) % 60
+	h, minutes := m / 60, m % 60
+	d, hours := h / 24, h % 24
+	w, days := d / 7, d % 7
+	years, weeks := w / 52, w % 52
+
+	return &Duration{
+		Seconds: int(seconds),
+		Minutes: int(minutes),
+		Hours: int(hours),
+		Days: int(days),
+		Weeks: int(weeks),
+		Years: int(years),
+	}
+}
